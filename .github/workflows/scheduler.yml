@@ -1,0 +1,35 @@
+name: Calendly Scraper (every 30m)
+
+on:
+  schedule:
+    - cron: "*/30 * * * *"     # every 30 minutes
+  workflow_dispatch:            # allow manual runs
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install Python deps
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Install Playwright browsers (Chromium only)
+        run: |
+          python -m playwright install --with-deps chromium
+
+      - name: Run scraper
+        env:
+          # Prefer putting secrets here via GitHub → Repository → Settings → Secrets and variables → Actions
+          NTFY_TOPIC: ${{ secrets.NTFY_TOPIC }}
+        run: |
+          python main.py
