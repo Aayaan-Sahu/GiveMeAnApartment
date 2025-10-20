@@ -3,7 +3,7 @@ from dotenv import load_dotenv
 from playwright.async_api import async_playwright
 
 CALENDLY_URL = "https://calendly.com/d/cpg8-rvf-4hq/jsm-virtual-lease-signing?month=2025-"
-CUTOFF = datetime.date(2025, 12, 3)                     # earliest you’ll accept
+CUTOFF = datetime.date(2025, 12, 20)                     # earliest you’ll accept
 DAYS_TO_SCAN = 21 
 
 load_dotenv()
